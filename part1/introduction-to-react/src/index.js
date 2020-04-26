@@ -12,15 +12,28 @@ const Hello = ({ name, age }) => {
   )
 }
 
-const App = () => {
+const App = (props) => {
+  const { counter } = props
   const baseAge = 1
 
   return (
     <div>
-      <h1>Greetings!</h1>
+      <h1>Greetings, page visits: {counter}!</h1>
       <Hello name="Dennis" age={13 * 2 + baseAge * 2}></Hello>
     </div>
   )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+let counter = 1
+
+const refresh = () => {
+  ReactDOM.render(<App counter={counter} />,
+  document.getElementById('root'))
+}
+
+refresh()
+
+setInterval(() => {
+  refresh()
+  counter += 1
+}, 10000)
