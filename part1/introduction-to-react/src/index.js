@@ -1,6 +1,17 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+function removeLast(array, element) {
+  let arr = [...array]
+  for (let i = arr.length; i >= 0; i--) {
+    if (arr[i] === element) {
+      arr.splice(i, 1)
+      break
+    }
+  }
+  return arr
+}
+
 const Hello = ({ name, age }) => {
   const bornYear = () => new Date().getFullYear() - age
 
@@ -30,15 +41,19 @@ const DisplayCounter = ({name, counter }) => {
   )
 }
 
-function removeLast(array, element) {
-  let arr = [...array]
-  for (let i = arr.length; i >= 0; i--) {
-    if (arr[i] === element) {
-      arr.splice(i, 1)
-      break
-    }
+const History = ({ allClicks }) => {
+  if (allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing buttons
+      </div>
+    )
   }
-  return arr
+  return (
+    <div>
+      button press history: {allClicks.join(' ')}
+    </div>
+  )
 }
 
 const App = (props) => {
@@ -89,7 +104,7 @@ const App = (props) => {
         clickHandler={decreaseRight}
         text="right minus"
       />
-      <p>{allClicks.join(' ')}</p>
+      <History allClicks={allClicks} />
     </div>
   )
 }
