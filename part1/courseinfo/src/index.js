@@ -10,14 +10,12 @@ const Part = (props) => (
 )
 
 const Content = (props) => {
-  const zippedArray = props.parts.map((value, index) => [value, props.exercisesNumbers[index]])
-
   return (
     <div>
-      {zippedArray.map(element => {
+      {props.parts.map(coursePart => {
         return <Part
-              name={element[0]}
-              numberOfExercises={element[1]}
+              name={coursePart.name}
+              numberOfExercises={coursePart.exercises}
             >
           </Part>
       })}
@@ -32,24 +30,30 @@ const Total = (props) => (
 const App = () => {
   const course = 'Half Stack application development'
   const parts = [
-    'Fundamentals of React',
-    'Using props to pass data',
-    'State of a component'
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
   ]
-  const exercisesNumbers = [
-    10,
-    7,
-    14
-  ]
-  const sumOfExercises = exercisesNumbers.reduce(
-    (a, b) => (a + b),
-    0
-  )
+  const sumOfExercises = parts
+    .map((name, exercises) => exercises)
+    .reduce(
+      (a, b) => (a + b),
+      0
+    )
 
   return (
     <div>
       <Header course={course}></Header>
-      <Content parts={parts} exercisesNumbers={exercisesNumbers}>
+      <Content parts={parts}>
       </Content>
       <Total total={sumOfExercises}></Total>
     </div>
