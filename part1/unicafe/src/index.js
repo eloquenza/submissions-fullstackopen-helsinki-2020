@@ -18,7 +18,7 @@ const Feedback = ({handlers}) => {
   )
 }
 
-const Statistics = ({stats}) => {
+const Statistics = ({stats, sum, average, positive}) => {
   return (
     <div>
       <Header text="Statistics"></Header>
@@ -27,6 +27,9 @@ const Statistics = ({stats}) => {
             <p>{elem.name}: {elem.stat}</p>
           )
       })}
+      <p>sum of stats: {sum}</p>
+      <p>average: {average}</p>
+      <p>positive: {positive * 100} %</p>
     </div>
   )
 }
@@ -73,10 +76,19 @@ const App = () => {
     }
   )
 
+  const sum = good + bad + neutral
+  const average = ((good * 1) + (bad * -1)) / sum
+  const percentageOfPositive = good / sum
+
   return (
     <div>
-      <Feedback handlers={slicedHandlers}></Feedback>
-      <Statistics stats={slicedStats}></Statistics>
+      <Feedback handlers={slicedHandlers} />
+      <Statistics
+        stats={slicedStats}
+        sum={sum}
+        average={average}
+        positive={percentageOfPositive}
+      />
     </div>
   )
 }
