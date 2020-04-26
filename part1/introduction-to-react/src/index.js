@@ -16,15 +16,19 @@ const App = (props) => {
   const [ counter, setCounter ] = useState(0)
   const baseAge = 1
 
-  setTimeout(
-    () => setCounter(counter + 1),
-    1000
-  )
+  const increaseCounterHandle = () => setCounter(counter + 1)
+  const resetCounterHandle = () => setCounter(0)
 
   return (
     <div>
       <h1>Greetings, page visits: {counter}!</h1>
       <Hello name="Dennis" age={13 * 2 + baseAge * 2}></Hello>
+      <button onClick={increaseCounterHandle}>
+        plus
+      </button>
+      <button onClick={resetCounterHandle}>
+        zero
+      </button>
     </div>
   )
 }
