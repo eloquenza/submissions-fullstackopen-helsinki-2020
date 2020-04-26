@@ -11,16 +11,25 @@ const Feedback = ({handlers}) => {
       <Header text="Feedback"></Header>
       {handlers.map(elem => {
         return (
-            <Button text={elem.name} clickHandler={elem.handler}></Button>
+            <Button
+            key={elem.name}
+            text={elem.name} clickHandler={elem.handler}></Button>
           )
       })}
     </div>
   )
 }
 
-const Statistic = ({text, value}) => <p>{text}: {value}</p>
+const Statistic = ({text, value}) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
+}
 
-const Statistics = ({stats, sum, average, positive}) => {
+const Statistics = ({stats, sum}) => {
  const statHeader = <Header text="Statistics"></Header>
   if (sum === 0) {
     return (
@@ -33,11 +42,15 @@ const Statistics = ({stats, sum, average, positive}) => {
   return (
     <div>
       {statHeader}
-      {stats.map(elem => {
-        return (
-          <Statistic text={elem.name} value={elem.stat}/>
-        )
-      })}
+      <table>
+        <tbody>
+          {stats.map(elem => {
+            return (
+              <Statistic key={elem.name} text={elem.name} value={elem.stat}/>
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   )
 }
@@ -105,6 +118,7 @@ const App = () => {
       <Feedback handlers={slicedHandlers} />
       <Statistics
         stats={allStats}
+        sum={sum}
       />
     </div>
   )
