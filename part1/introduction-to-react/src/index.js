@@ -12,23 +12,52 @@ const Hello = ({ name, age }) => {
   )
 }
 
+const Greetings = () => (
+  <h1>Greetings</h1>
+)
+
+const Button = ({ clickHandler, text }) => {
+  return (
+    <button onClick={clickHandler}>
+      {text}
+    </button>
+  )
+}
+
+const DisplayCounter = ({ counter }) => {
+  return (
+    <div>{counter}</div>
+  )
+}
+
 const App = (props) => {
   const [ counter, setCounter ] = useState(0)
   const baseAge = 1
 
-  const increaseCounterHandle = () => setCounter(counter + 1)
-  const resetCounterHandle = () => setCounter(0)
+  const increaseCounter = () => setCounter(counter + 1)
+  const decreaseCounter = () => setCounter(counter - 1)
+  const resetCounter = () => setCounter(0)
 
   return (
     <div>
-      <h1>Greetings, page visits: {counter}!</h1>
-      <Hello name="Dennis" age={13 * 2 + baseAge * 2}></Hello>
-      <button onClick={increaseCounterHandle}>
-        plus
-      </button>
-      <button onClick={resetCounterHandle}>
-        zero
-      </button>
+      <Greetings></Greetings>
+      <DisplayCounter counter={counter} />
+      <Hello
+        name="Dennis"
+        age={13 * 2 + baseAge * 2}
+      />
+      <Button
+        clickHandler={increaseCounter}
+        text="plus"
+      />
+      <Button
+        clickHandler={decreaseCounter}
+        text="minus"
+      />
+      <Button
+        clickHandler={resetCounter}
+        text="zero"
+      />
     </div>
   )
 }
