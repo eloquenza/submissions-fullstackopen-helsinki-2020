@@ -1,64 +1,50 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import App from './App'
 
-const Header = (props) => (
-  <h1>{props.course}</h1>
-)
-
-const Part = (props) => (
-  <p>{props.name} {props.numberOfExercises}</p>
-)
-
-const Content = (props) => {
-  return (
-    <div>
-      {props.parts.map(coursePart => {
-        return <Part
-              name={coursePart.name}
-              numberOfExercises={coursePart.exercises}
-            >
-          </Part>
-      })}
-    </div>
-  )
-}
-
-const Total = (props) => (
-  <p>Number of exercises {props.total}</p>
-)
-
-const App = () => {
-  const course = {
+const courses = [
+  {
     name: 'Half Stack application development',
+    id: 1,
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
+      }
+    ]
+  },
+  {
+    name: 'Node.js',
+    id: 2,
+    parts: [
+      {
+        name: 'Routing',
+        exercises: 3,
+        id: 1
+      },
+      {
+        name: 'Middlewares',
+        exercises: 7,
+        id: 2
       }
     ]
   }
-  const sumOfExercises = course.parts
-    .reduce(
-      (accumulator, newPart) => (accumulator + newPart.exercises),
-      0
-    )
+]
 
-  return (
-    <div>
-      <Header course={course.name}></Header>
-      <Content parts={course.parts}>
-      </Content>
-      <Total total={sumOfExercises}></Total>
-    </div>
-  )
-}
-
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App courses={courses}/>, document.getElementById('root'))
