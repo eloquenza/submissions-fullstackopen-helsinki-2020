@@ -24,40 +24,72 @@ const Button = ({ clickHandler, text }) => {
   )
 }
 
-const DisplayCounter = ({ counter }) => {
+const DisplayCounter = ({name, counter }) => {
   return (
-    <div>{counter}</div>
+    <div>{name}: {counter}</div>
   )
 }
 
+function removeLast(array, element) {
+  let arr = [...array]
+  for (let i = arr.length; i >= 0; i--) {
+    if (arr[i] === element) {
+      arr.splice(i, 1)
+      break
+    }
+  }
+  return arr
+}
+
 const App = (props) => {
-  const [ counter, setCounter ] = useState(0)
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
   const baseAge = 1
 
-  const increaseCounter = () => setCounter(counter + 1)
-  const decreaseCounter = () => setCounter(counter - 1)
-  const resetCounter = () => setCounter(0)
+  const increaseLeft = () => {
+    setAll(allClicks.concat("L"))
+    setLeft(left + 1)
+  }
+  const increaseRight = () => {
+    setAll(allClicks.concat("R"))
+    setRight(right + 1)
+  }
+  const decreaseLeft = () => {
+    setAll(removeLast(allClicks, "L"))
+    setLeft(left - 1)
+  }
+  const decreaseRight = () => {
+    setAll(removeLast(allClicks, "R"))
+    setRight(right - 1)
+  }
 
   return (
     <div>
       <Greetings></Greetings>
-      <DisplayCounter counter={counter} />
+      <DisplayCounter name={"left"} counter={left} />
+      <DisplayCounter name={"right"} counter={right} />
       <Hello
         name="Dennis"
         age={13 * 2 + baseAge * 2}
       />
       <Button
-        clickHandler={increaseCounter}
-        text="plus"
+        clickHandler={increaseLeft}
+        text="left plus"
       />
       <Button
-        clickHandler={decreaseCounter}
-        text="minus"
+        clickHandler={decreaseLeft}
+        text="left minus"
       />
       <Button
-        clickHandler={resetCounter}
-        text="zero"
+        clickHandler={increaseRight}
+        text="right plus"
       />
+      <Button
+        clickHandler={decreaseRight}
+        text="right minus"
+      />
+      <p>{allClicks.join(' ')}</p>
     </div>
   )
 }
