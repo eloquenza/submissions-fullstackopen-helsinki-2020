@@ -46,9 +46,8 @@ const App = () => {
     ]
   }
   const sumOfExercises = course.parts
-    .map((coursePart) => coursePart.exercises)
     .reduce(
-      (a, b) => (a + b),
+      (accumulator, newPart) => (accumulator + newPart.exercises),
       0
     )
 
