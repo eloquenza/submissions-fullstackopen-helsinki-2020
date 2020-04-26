@@ -18,18 +18,26 @@ const Feedback = ({handlers}) => {
   )
 }
 
+const Statistic = ({text, value}) => <p>{text}: {value}</p>
+
 const Statistics = ({stats, sum, average, positive}) => {
+ const statHeader = <Header text="Statistics"></Header>
+  if (sum === 0) {
+    return (
+      <div>
+        {statHeader}
+        <p>No feedback given yet!</p>
+      </div>
+    )
+  }
   return (
     <div>
-      <Header text="Statistics"></Header>
+      {statHeader}
       {stats.map(elem => {
         return (
-            <p>{elem.name}: {elem.stat}</p>
-          )
+          <Statistic text={elem.name} value={elem.stat}/>
+        )
       })}
-      <p>sum of stats: {sum}</p>
-      <p>average: {average}</p>
-      <p>positive: {positive * 100} %</p>
     </div>
   )
 }
@@ -77,17 +85,26 @@ const App = () => {
   )
 
   const sum = good + bad + neutral
-  const average = ((good * 1) + (bad * -1)) / sum
-  const percentageOfPositive = good / sum
+
+  const allStats = slicedStats
+    .concat({
+      name: "sum",
+      stat: sum
+    })
+    .concat({
+      name: "average",
+      stat: ((good * 1) + (bad * -1)) / sum
+    })
+    .concat({
+      name: "positive",
+      stat: (good / sum) * 100
+    })
 
   return (
     <div>
       <Feedback handlers={slicedHandlers} />
       <Statistics
-        stats={slicedStats}
-        sum={sum}
-        average={average}
-        positive={percentageOfPositive}
+        stats={allStats}
       />
     </div>
   )
